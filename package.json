@@ -1,0 +1,37 @@
+{
+	"name": "designer-web-app-template",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "biome check .",
+		"lint:fix": "biome check --fix .",
+		"format": "biome format --write .",
+		"deploy": "npm run build && wrangler pages deploy"
+	},
+	"dependencies": {
+		"@radix-ui/react-slot": "^1.2.4",
+		"class-variance-authority": "^0.7.1",
+		"clsx": "^2.1.1",
+		"hono": "^4.12.12",
+		"lucide-react": "^0.577.0",
+		"next": "^16.2.3",
+		"react": "^19.2.5",
+		"react-dom": "^19.0.0",
+		"tailwind-merge": "^3.0.0"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.4.10",
+		"@opennextjs/cloudflare": "^1.18.0",
+		"@tailwindcss/postcss": "^4.2.2",
+		"@types/node": "^25.6.0",
+		"@types/react": "^19.0.0",
+		"@types/react-dom": "^19.0.0",
+		"postcss": "^8.5.9",
+		"tailwindcss": "^4.2.2",
+		"typescript": "^5.7.0",
+		"wrangler": "^4.80.0"
+	}
+}
