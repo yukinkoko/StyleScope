@@ -18,7 +18,7 @@
 		"hono": "^4.12.12",
 		"lucide-react": "^0.577.0",
 		"next": "^16.2.3",
-		"react": "^19.2.5",
+		"react": "^19.2.7",
 		"react-dom": "^19.0.0",
 		"tailwind-merge": "^3.0.0"
 	},
@@ -27,7 +27,7 @@
 		"@opennextjs/cloudflare": "^1.18.0",
 		"@tailwindcss/postcss": "^4.2.2",
 		"@types/node": "^25.6.0",
-		"@types/react": "^19.0.0",
+		"@types/react": "^19.2.17",
 		"@types/react-dom": "^19.0.0",
 		"postcss": "^8.5.9",
 		"tailwindcss": "^4.2.2",
