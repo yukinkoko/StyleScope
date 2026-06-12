@@ -351,6 +351,10 @@ future_v3:
 ## 5. 画面構成
 
 ```yaml
+screen_notes:
+  input_detail_doc: "docs/input-screen-wireframe.md"
+  input_model: "画像1枚 / 複数画像 / テキストは、v1では1つのInput画面内のモード切り替えとして扱う案を優先する"
+
 screens_v1:
   - id: home
     name: "Home"
@@ -363,6 +367,17 @@ screens_v1:
       - "雰囲気から探すカード"
       - "Recent Scopes"
 
+  - id: input
+    name: "Input"
+    purpose: "画像1枚 / 複数画像 / テキストを切り替えて、AI分析に進む入口"
+    main_elements:
+      - "Input Mode: 画像1枚 / 複数画像 / テキスト"
+      - "Primary Input: アップロードまたはテキスト入力"
+      - "補足テキスト 任意"
+      - "Analysis Setup"
+      - "Analyze ボタン"
+    note: "詳細WFは docs/input-screen-wireframe.md を参照"
+
   - id: image_scope
     name: "Image Scope"
     purpose: "画像を入力して分析へ進む"
@@ -372,6 +387,7 @@ screens_v1:
       - "補足テキスト 任意"
       - "画像プレビュー"
       - "Analyze Style ボタン"
+    note: "v1ではInput画面の 画像1枚 モードとして扱う"
 
   - id: multi_image_scope
     name: "Multi Image Scope"
@@ -381,7 +397,7 @@ screens_v1:
       - "画像プレビュー一覧"
       - "補足テキスト 任意"
       - "共通点を分析するボタン"
-    note: "v1ではムードボード化せず、共通点の抽出と検索ワード生成に限定する"
+    note: "v1ではInput画面の 複数画像 モードとして扱う。ムードボード化せず、共通点の抽出と検索ワード生成に限定する"
 
   - id: mood_scope
     name: "Mood Scope"
@@ -391,7 +407,7 @@ screens_v1:
       - "Mood hints チップ"
       - "Example prompts"
       - "Find Styles ボタン"
-    note: "用途選択はv1では入れない"
+    note: "v1ではInput画面の テキスト モードとして扱う。用途選択はv1では入れない"
 
   - id: analyzing
     name: "Analyzing"
