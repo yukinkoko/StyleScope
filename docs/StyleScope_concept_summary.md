@@ -353,7 +353,7 @@ future_v3:
 ```yaml
 screen_notes:
   input_detail_doc: "docs/input-screen-wireframe.md"
-  input_model: "画像1枚 / 複数画像 / テキストは、v1では1つのInput画面内のモード切り替えとして扱う案を優先する"
+  input_model: "v1デモではFigma参照に合わせ、画像アップロードと文章入力を1つの中央入力画面に集約する。画像枚数や文章入力からResult側で表示を出し分ける"
 
 screens_v1:
   - id: home
@@ -369,13 +369,12 @@ screens_v1:
 
   - id: input
     name: "Input"
-    purpose: "画像1枚 / 複数画像 / テキストを切り替えて、AI分析に進む入口"
+    purpose: "参考画像または雰囲気の言葉を入れて、AI分析に進む入口"
     main_elements:
-      - "Input Mode: 画像1枚 / 複数画像 / テキスト"
-      - "Primary Input: アップロードまたはテキスト入力"
-      - "補足テキスト 任意"
-      - "Analysis Setup"
-      - "Analyze ボタン"
+      - "Hero Copy: What Style do you want?"
+      - "Large Drop Area: 画像投入"
+      - "Text Input Bar: スタイルイメージの文章入力"
+      - "Primary Action: ファイル選択 / 入力送信"
     note: "詳細WFは docs/input-screen-wireframe.md を参照"
 
   - id: image_scope
@@ -387,7 +386,7 @@ screens_v1:
       - "補足テキスト 任意"
       - "画像プレビュー"
       - "Analyze Style ボタン"
-    note: "v1ではInput画面の 画像1枚 モードとして扱う"
+    note: "v1デモではInput画面の画像投入から扱う"
 
   - id: multi_image_scope
     name: "Multi Image Scope"
@@ -397,7 +396,7 @@ screens_v1:
       - "画像プレビュー一覧"
       - "補足テキスト 任意"
       - "共通点を分析するボタン"
-    note: "v1ではInput画面の 複数画像 モードとして扱う。ムードボード化せず、共通点の抽出と検索ワード生成に限定する"
+    note: "v1デモではInput画面の画像投入から扱う。ムードボード化せず、共通点の抽出と検索ワード生成に限定する"
 
   - id: mood_scope
     name: "Mood Scope"
@@ -407,7 +406,7 @@ screens_v1:
       - "Mood hints チップ"
       - "Example prompts"
       - "Find Styles ボタン"
-    note: "v1ではInput画面の テキスト モードとして扱う。用途選択はv1では入れない"
+    note: "v1デモではInput画面下部の文章入力バーから扱う。用途選択はv1では入れない"
 
   - id: analyzing
     name: "Analyzing"
@@ -591,15 +590,15 @@ screens_v1:
 
 ```yaml
 result_screen:
-  purpose: "読む画面ではなく、探索・コピー・保存へ進む操作パネル"
+  purpose: "Input画面と同じ静かなトーンで、探索・コピー・保存へ進めるOutput画面"
   layout:
-    desktop: "上部に結果サマリー、左にSource/Actions、右に分析結果"
-    mobile: "AI Instructionを上部、Sourceは下部、各セクションは縦積み"
+    desktop: "中央にResult Hero、薄いグレーのAI Instructionパネル、下にStyle Directionsと構成要素"
+    mobile: "Hero、AI Instruction、Style Directions、構成要素を縦積み"
   sections:
     - id: header
       name: "Result Header"
       content:
-        - "タイトル: Soft Futurism / Calm SaaS / Minimal Editorial"
+        - "タイトル: Modern Editorial / Web Gallery"
         - "短い説明"
         - "Quick Actions"
       quick_actions:
@@ -617,11 +616,12 @@ result_screen:
     - id: ai_instruction
       name: "AI Instruction"
       content:
-        - "左側: AI Summary / AIが読み取った全体の方向性"
-        - "右側: Prompt for AI / AIに貼る指示文"
+        - "Source preview / 入力元の確認"
+        - "AI Summary / AIが読み取った全体の方向性"
+        - "Prompt for AI / AIに貼る指示文"
         - "UI改善 / 新規生成 の切り替え"
         - "日本語 / 英語 の切り替え"
-        - "Copy Promptボタン"
+        - "AI指示をコピー ボタン"
 
     - id: style_directions
       name: "Style Directions"
@@ -658,52 +658,25 @@ result_screen:
 
 ```text
 ┌────────────────────────────────────────────────────────┐
-│ ← Back                                                  │
-├────────────────────────────────────────────────────────┤
+│ StyleScope                                       [←][+] │
 │                                                        │
-│  Result                                                │
-│  Soft Futurism / Calm SaaS / Minimal Editorial          │
-│  透明感と近未来感がありつつ、やわらかく落ち着いた方向です。│
+│  StyleScope Result                                     │
+│  Modern Editorial                                      │
+│  Web Gallery                                           │
+│  雑誌のような余白と大きなビジュアルで、作品を上品に見せる方向です。│
 │                                                        │
 │  [ Pinterestで開く ] [ 保存 ] [ 再分析 ]                  │
 │                                                        │
-├───────────────────────┬────────────────────────────────┤
-│ Source                │ AI Instruction                  │
-│ ┌───────────────────┐ │                                │
-│ │ image/text preview│ │ ┌────────────┬───────────────┐ │
-│ └───────────────────┘ │ │ Summary    │ Prompt for AI │ │
-│                       │ │ 透明感と    │ [UI改善][新規] │ │
-│                       │ │ 近未来感。  │ この既存UIを… │ │
-│                       │ │ 余白多め。  │ [Copy Prompt] │ │
-│                       │ └────────────────────────────┘ │
-│                       │                                │
-│                       │ Style Directions                │
-│                       │ ┌────────────────────────────┐ │
-│                       │ │ 1st / Strong fit            │ │
-│                       │ │ Soft Futurism               │ │
-│                       │ │ [ P icon ↗ ]                │ │
-│                       │ └────────────────────────────┘ │
-│                       │                                │
-│                       │ ┌────────────────────────────┐ │
-│                       │ │ 2nd / Good fit              │ │
-│                       │ │ Calm SaaS                   │ │
-│                       │ │ [ P icon ↗ ]                │ │
-│                       │ └────────────────────────────┘ │
-│                       │ ┌────────────────────────────┐ │
-│                       │ │ 3rd / Related               │ │
-│                       │ │ Minimal Editorial           │ │
-│                       │ │ [ P icon ↗ ]                │ │
-│                       │ └────────────────────────────┘ │
-│                       │                                │
-│                       │ 構成要素                       │
-│                       │ 複数画像の共通点                │
-│                       │ ┌────────────────────────────┐ │
-│                       │ │ ・淡いブルーと白い余白       │ │
-│                       │ │ ・角丸カードと薄い境界線     │ │
-│                       │ │ ・冷たすぎないテック感       │ │
-│                       │ └────────────────────────────┘ │
-│                       │                                │
-└───────────────────────┴────────────────────────────────┘
+│  ┌──────────────────────────────────────────────────┐  │
+│  │ Source          │ AI Instruction                  │  │
+│  │ image previews  │ AIに渡せる方向性                │  │
+│  │ Input / Mode    │ [UI改善][新規] [日本語][English]│  │
+│  │ Created         │ この既存UIを… [AI指示をコピー]  │  │
+│  └──────────────────────────────────────────────────┘  │
+│                                                        │
+│  Style Directions: 1st / 2nd / 3rd                     │
+│  構成要素: 複数画像の共通点                              │
+└────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -746,29 +719,29 @@ prompt_for_ai:
 ### 日本語 UI改善用プロンプト例
 
 ```text
-この既存UIを、Soft Futurism と Calm SaaS を掛け合わせた雰囲気に整えてください。
+既存の画面やビジュアルを、modern editorial web gallery design のトーンに整えてください。
 
-全体は淡いブルー、オフホワイト、ソフトグレーを中心にした低彩度の配色にし、余白を広めに取って、軽く透明感のある印象にしてください。
+大きな画像を主役にし、オフホワイト、黒、ニュートラルグレーを基調に、余白を広く取ってください。
 
-タイポグラフィは読みやすいサンセリフを使い、見出しは中太、本文は落ち着いた印象にしてください。
+見出しは上品なセリフ体、本文は読みやすいサンセリフで、雑誌のようなグリッドと静かな階層を作ってください。
 
-UIは角丸のカード、控えめな境界線、薄い影、やわらかいグラデーションを使い、近未来感は出しつつも冷たくなりすぎないようにしてください。
+作品やビジュアルが主役に見えるように、装飾は最小限にしてください。
 
-避けたい要素は、強いネオン、黒背景のサイバーパンク、コントラストが強すぎる配色、情報が詰まったレイアウトです。
+避けたい要素は、過度な装飾、SaaSっぽい青いカードUI、派手なグラデーション、情報が詰まったレイアウトです。
 ```
 
 ### 英語 UI改善用プロンプト例
 
 ```text
-Redesign this existing UI with a Soft Futurism and Calm SaaS visual direction.
+Refine this existing screen or visual direction with a modern editorial web gallery design tone.
 
-Use a low-saturation palette based on pale blue, off-white, and soft gray. Keep the layout spacious, airy, and calm, with a light sense of translucency.
+Lead with large imagery, generous whitespace, elegant serif headlines, clean body typography, and a restrained neutral palette.
 
-Use clean sans-serif typography with medium-weight headings and readable body text. The overall impression should feel modern, gentle, and approachable.
+Use a magazine-like grid and curated spacing so the work or visual content becomes the main subject.
 
-For UI details, use rounded cards, subtle borders, soft shadows, light gradients, and translucent panels. Add a futuristic feeling without making it cold or overly technical.
+Keep decoration minimal and let hierarchy, image scale, and typography create the mood.
 
-Avoid strong neon colors, dark cyberpunk aesthetics, harsh contrast, dense layouts, and overly decorative elements.
+Avoid over-decorated UI, SaaS-like blue cards, loud gradients, harsh contrast, and dense layouts.
 ```
 
 ---
@@ -809,88 +782,88 @@ external_search_urls:
   "summary": {
     "source_type": "image_set",
     "source_count": 3,
-    "title": "Soft Futurism / Calm SaaS",
-    "short_description": "透明感と近未来感がありつつ、やわらかく落ち着いたUI方向です。",
-    "ai_summary": "複数画像に共通して、淡い色、広い余白、角丸カード、控えめな境界線、冷たすぎないテック感が見られます。"
+    "title": "Modern Editorial / Web Gallery",
+    "short_description": "雑誌のような余白と大きなビジュアルで、作品を上品に見せるWebギャラリー方向です。",
+    "ai_summary": "複数画像に共通して、大きなビジュアル、広い余白、セリフ体の見出し、静かな白黒・ニュートラル配色が見られます。"
   },
   "common_points": [
     {
       "label": "Color",
-      "description": "白〜淡いブルー、ソフトグレーを中心にした低彩度の配色。"
+      "description": "オフホワイト、黒、ニュートラルグレーを中心にした落ち着いた配色。"
     },
     {
       "label": "Layout",
-      "description": "余白が広く、要素数を絞った静かな構成。"
+      "description": "大きな画像、広い余白、非対称グリッドを使った編集的な構成。"
     },
     {
-      "label": "UI Details",
-      "description": "角丸カード、薄い境界線、軽い影、透明感のあるパネル。"
+      "label": "Typography",
+      "description": "上品なセリフ体見出しと、読みやすいサンセリフ本文の組み合わせ。"
     },
     {
       "label": "Mood",
-      "description": "近未来感はあるが、冷たすぎず、やわらかく親しみやすい。"
+      "description": "editorial / curated / refined。作品やビジュアルが主役に見える。"
     }
   ],
   "style_directions": [
     {
-      "name": "Soft Futurism",
+      "name": "Modern Editorial Web Gallery",
       "fit": "strong",
-      "description": "透明感と近未来感がありつつ、淡い色や丸みで冷たさを抑える方向。",
-      "tags": ["transparent", "soft-tech", "pale-blue", "airy"],
-      "pinterest_keyword": "soft futuristic UI",
-      "pinterest_url": "https://www.pinterest.com/search/pins/?q=soft%20futuristic%20UI"
+      "description": "作品や画像を主役に、大きな余白と編集的な視線で見せる方向。",
+      "tags": ["editorial", "gallery", "image-led", "serif"],
+      "pinterest_keyword": "modern editorial web gallery design",
+      "pinterest_url": "https://www.pinterest.com/search/pins/?q=modern%20editorial%20web%20gallery%20design"
     },
     {
-      "name": "Calm SaaS",
+      "name": "Art Direction Portfolio",
       "fit": "good",
-      "description": "テック感はあるが、余白と低彩度で落ち着いた印象にする方向。",
-      "tags": ["minimal", "product-ui", "calm"],
-      "pinterest_keyword": "calm tech product design",
-      "pinterest_url": "https://www.pinterest.com/search/pins/?q=calm%20tech%20product%20design"
+      "description": "アートディレクションを感じる構図と写真の見せ方で、印象を強める方向。",
+      "tags": ["portfolio", "art-direction", "composition"],
+      "pinterest_keyword": "art direction portfolio website design",
+      "pinterest_url": "https://www.pinterest.com/search/pins/?q=art%20direction%20portfolio%20website%20design"
     },
     {
-      "name": "Minimal Editorial",
+      "name": "Minimal Web Magazine",
       "fit": "related",
-      "description": "余白とタイポグラフィを中心に、静かで上品に見せる方向。",
-      "tags": ["editorial", "quiet", "typography"],
-      "pinterest_keyword": "minimal editorial UI",
-      "pinterest_url": "https://www.pinterest.com/search/pins/?q=minimal%20editorial%20UI"
+      "description": "雑誌のようなタイポグラフィとグリッドで、情報を静かに整理する方向。",
+      "tags": ["magazine", "grid", "typography"],
+      "pinterest_keyword": "minimal web magazine layout",
+      "pinterest_url": "https://www.pinterest.com/search/pins/?q=minimal%20web%20magazine%20layout"
     }
   ],
   "visual_components": {
     "color": {
-      "description": "淡いブルー、オフホワイト、ソフトグレーを中心にした低彩度の配色。",
-      "palette": ["#F7FAFC", "#DCEAF2", "#AAB8C2", "#6E7B86", "#1F2933"]
+      "description": "オフホワイト、黒、ニュートラルグレーを中心にした落ち着いた配色。",
+      "palette": ["#F6F4EF", "#111111", "#6F6B64", "#D8D4CC", "#FFFFFF"]
     },
-    "typography": "clean sans-serif, medium headings, relaxed line-height",
-    "layout": "large spacing, card-based sections, clear hierarchy",
-    "ui_details": "rounded corners, subtle borders, soft shadows",
-    "texture": "blur, glass, soft gradient, subtle glow",
-    "mood": ["calm", "airy", "modern", "gentle futuristic"],
-    "avoid": ["hard neon", "black cyberpunk", "heavy contrast", "busy layout"]
+    "typography": "elegant serif headlines, clean sans-serif body, quiet captions",
+    "layout": "large imagery, generous whitespace, asymmetrical editorial grid",
+    "ui_details": "thin rules, minimal controls, restrained image frames",
+    "texture": "paper-like stillness, no heavy effects",
+    "mood": ["editorial", "curated", "refined", "gallery-like"],
+    "avoid": ["over-decorated UI", "SaaS-like blue cards", "loud gradients", "busy layout"]
   },
   "prompts": {
     "ja": {
-      "ui_improvement": "この既存UIを、Soft Futurism と Calm SaaS を掛け合わせた雰囲気に整えてください。全体は淡いブルー、オフホワイト、ソフトグレーを中心にした低彩度の配色にし、余白を広めに取って、軽く透明感のある印象にしてください。タイポグラフィは読みやすいサンセリフを使い、見出しは中太、本文は落ち着いた印象にしてください。UIは角丸のカード、控えめな境界線、薄い影、やわらかいグラデーションを使い、近未来感は出しつつも冷たくなりすぎないようにしてください。避けたい要素は、強いネオン、黒背景のサイバーパンク、コントラストが強すぎる配色、情報が詰まったレイアウトです。",
-      "new_generation": "Soft Futurism と Calm SaaS を掛け合わせた雰囲気のデジタルプロダクトUIを作成してください。淡いブルー、オフホワイト、ソフトグレーを中心に、余白が広く、透明感があり、やわらかい近未来感のある画面にしてください。角丸カード、控えめな境界線、薄い影、クリーンなサンセリフを使い、冷たすぎず親しみやすい印象にしてください。"
+      "ui_improvement": "既存の画面やビジュアルを、modern editorial web gallery design のトーンに整えてください。大きな画像を主役にし、オフホワイト、黒、ニュートラルグレーを基調に、余白を広く取ってください。見出しは上品なセリフ体、本文は読みやすいサンセリフで、雑誌のようなグリッドと静かな階層を作ってください。過度な装飾、SaaSっぽい青いカードUI、派手なグラデーションは避けてください。",
+      "new_generation": "modern editorial web gallery design のトーンで新しいデザインを作成してください。大きな画像、広い余白、上品なセリフ体見出し、雑誌のようなグリッド、オフホワイト・黒・ニュートラルグレーの落ち着いた配色を使ってください。作品やビジュアルが主役に見えるよう、装飾は最小限にしてください。"
     },
     "en": {
-      "ui_improvement": "Redesign this existing UI with a Soft Futurism and Calm SaaS visual direction. Use a low-saturation palette based on pale blue, off-white, and soft gray. Keep the layout spacious, airy, and calm, with a light sense of translucency. Use clean sans-serif typography with medium-weight headings and readable body text. For UI details, use rounded cards, subtle borders, soft shadows, light gradients, and translucent panels. Avoid strong neon colors, dark cyberpunk aesthetics, harsh contrast, dense layouts, and overly decorative elements.",
-      "new_generation": "Create a new digital product UI with a Soft Futurism and Calm SaaS visual direction. Use pale blue, off-white, and soft gray as the main palette. Make the layout spacious, calm, translucent, and gently futuristic. Use rounded cards, subtle borders, soft shadows, clean sans-serif typography, and restrained gradients. Keep the overall mood modern, approachable, and not overly cold or technical."
+      "ui_improvement": "Refine this existing screen or visual direction with a modern editorial web gallery design tone. Lead with large imagery, generous whitespace, elegant serif headlines, clean body typography, and a restrained neutral palette. Use a magazine-like grid and curated spacing. Avoid over-decorated UI, SaaS-like blue cards, loud gradients, and dense layouts.",
+      "new_generation": "Create a new design with a modern editorial web gallery design tone. Make imagery the hero, use generous whitespace, elegant serif headlines, clean supporting text, a magazine-like grid, and an off-white, black, and neutral gray palette. Keep decoration minimal so the content feels curated and refined."
     }
   },
   "related_styles": [
     {
-      "name": "Glassmorphism",
-      "description": "より透明感・ぼかし・ガラス質感に寄せる。"
+      "name": "Editorial Portfolio",
+      "description": "より作品集やギャラリーサイトの見せ方に寄せる。"
     },
     {
-      "name": "Minimal Editorial",
-      "description": "より余白とタイポグラフィに寄せる。"
+      "name": "Art Direction Portfolio",
+      "description": "より写真・構図・余白のアートディレクションに寄せる。"
     },
     {
-      "name": "Frutiger Aero",
-      "description": "より懐かしい透明感・光沢感に寄せる。"
+      "name": "Minimal Web Magazine",
+      "description": "より雑誌的なグリッドとタイポグラフィに寄せる。"
     }
   ]
 }
