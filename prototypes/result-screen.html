@@ -7,23 +7,21 @@
 	<title>StyleScope Result Prototype</title>
 	<style>
 		:root {
-			--bg: #f6f7f5;
-			--surface: #ffffff;
-			--surface-soft: #f0f4f1;
-			--surface-blue: #edf5f7;
-			--ink: #202522;
-			--muted: #69736d;
-			--line: #dce2dd;
-			--line-strong: #c3cec7;
-			--accent: #335f56;
-			--accent-soft: #e2eee9;
-			--blue: #4b7280;
-			--mauve: #7b697a;
-			--gold: #8a6d35;
-			--shadow: 0 18px 45px rgba(41, 55, 47, 0.08);
-			--radius: 8px;
-			font-family:
-				"Hiragino Sans", "Yu Gothic", "YuGothic", "Noto Sans JP", system-ui, sans-serif;
+			--bg: #f4f3f0;
+			--ink: #1d1d1d;
+			--muted: #585858;
+			--quiet: #8b8b8b;
+			--line: #dbdbdb;
+			--panel: #e9e8e5;
+			--panel-light: #f8f7f4;
+			--dark: #1d1d1d;
+			--footer: #1b1b1b;
+			--radius: 10px;
+			--font-jp: "Hiragino Sans", "Yu Gothic", "YuGothic", "Noto Sans JP", system-ui,
+				sans-serif;
+			--font-body: "Adobe Caslon Pro", var(--font-jp);
+			--font-display: "Adobe Caslon Pro", "Times New Roman", var(--font-jp), serif;
+			font-family: var(--font-body);
 		}
 
 		* {
@@ -32,16 +30,14 @@
 
 		body {
 			margin: 0;
-			background:
-				linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(246, 247, 245, 0.95)),
-				var(--bg);
+			background: var(--bg);
 			color: var(--ink);
 			font-size: 15px;
-			line-height: 1.6;
+			line-height: 1.65;
 		}
 
-		button,
-		a {
+		a,
+		button {
 			font: inherit;
 		}
 
@@ -50,184 +46,207 @@
 			text-decoration: none;
 		}
 
-		.shell {
-			min-height: 100vh;
-			padding: 22px;
+		button {
+			cursor: pointer;
 		}
 
-		.app {
-			max-width: 1280px;
-			margin: 0 auto;
-			border: 1px solid var(--line);
-			background: rgba(255, 255, 255, 0.86);
-			box-shadow: var(--shadow);
+		.page {
+			display: flex;
+			flex-direction: column;
+			min-height: 100vh;
 		}
 
 		.topbar {
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			min-height: 56px;
-			padding: 0 22px;
-			border-bottom: 1px solid var(--line);
-			background: rgba(255, 255, 255, 0.76);
-			backdrop-filter: blur(14px);
-			position: sticky;
-			top: 0;
-			z-index: 10;
+			min-height: 88px;
+			padding: 24px 40px 0;
 		}
 
-		.back-link {
-			font-size: 13px;
+		.brand {
+			font-family: var(--font-display);
+			font-size: 28px;
+			line-height: 1;
+			letter-spacing: 0;
+		}
+
+		.top-actions {
+			display: flex;
+			gap: 10px;
+			align-items: center;
+		}
+
+		.icon-button {
+			display: inline-grid;
+			place-items: center;
+			width: 44px;
+			height: 44px;
+			border: 1px solid var(--line);
+			border-radius: var(--radius);
+			background:
+				radial-gradient(circle at 50% 50%, rgba(229, 229, 226, 0.92), rgba(244, 243, 240, 0.95)),
+				var(--panel-light);
+			color: #777;
+			font-size: 18px;
 			font-weight: 700;
-			color: var(--accent);
 		}
 
-		.header {
+		.icon-button:hover,
+		.icon-button:focus-visible {
+			border-color: #a9a9a9;
+			outline: none;
+		}
+
+		.output {
 			display: grid;
-			grid-template-columns: minmax(0, 1fr) auto;
-			gap: 24px;
-			align-items: end;
-			padding: 32px 36px 28px;
-			border-bottom: 1px solid var(--line);
+			gap: 46px;
+			width: min(100%, 1300px);
+			margin: 0 auto;
+			padding: 10px 40px 64px;
+			flex: 1;
+		}
+
+		.hero {
+			justify-self: center;
+			max-width: 760px;
+			text-align: center;
+			padding-top: 4px;
 		}
 
 		.kicker {
 			margin: 0 0 6px;
-			font-size: 12px;
-			font-weight: 700;
-			color: var(--blue);
+			font-size: 13px;
+			color: var(--quiet);
+		}
+
+		h1,
+		h2,
+		h3 {
+			letter-spacing: 0;
 		}
 
 		h1 {
 			margin: 0;
-			font-size: 30px;
-			line-height: 1.2;
-			font-weight: 760;
-			letter-spacing: 0;
+			font-family: var(--font-display);
+			font-size: clamp(38px, 4.4vw, 56px);
+			font-weight: 400;
+			line-height: 1.08;
 		}
 
-		.header p {
-			max-width: 680px;
-			margin: 10px 0 0;
+		.hero p {
+			margin: 14px auto 0;
+			max-width: 640px;
+			font-size: 15px;
 			color: var(--muted);
 		}
 
-		.actions {
+		.action-row {
 			display: flex;
-			gap: 8px;
-			align-items: center;
-			justify-content: flex-end;
+			justify-content: center;
+			gap: 10px;
 			flex-wrap: wrap;
+			margin-top: 24px;
 		}
 
-		.btn {
-			min-height: 38px;
-			border: 1px solid var(--line-strong);
-			border-radius: var(--radius);
-			padding: 8px 12px;
-			background: var(--surface);
+		.button {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			gap: 8px;
+			min-height: 44px;
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			padding: 10px 16px;
+			background: rgba(248, 247, 244, 0.82);
 			color: var(--ink);
-			cursor: pointer;
+			font-size: 14px;
 			font-weight: 700;
-			font-size: 13px;
 		}
 
-		.btn:hover,
-		.btn:focus-visible {
-			border-color: var(--accent);
+		.button.primary {
+			border-color: var(--dark);
+			background: var(--dark);
+			color: #fefdfb;
+		}
+
+		.button:hover,
+		.button:focus-visible {
+			border-color: #a9a9a9;
 			outline: none;
 		}
 
-		.btn.primary {
-			background: var(--accent);
-			border-color: var(--accent);
-			color: #ffffff;
+		.button.primary:hover,
+		.button.primary:focus-visible {
+			background: #000;
 		}
 
-		.btn.ghost {
-			background: transparent;
-		}
-
-		.layout {
+		.result-panel {
 			display: grid;
-			grid-template-columns: 288px minmax(0, 1fr);
-			min-height: 720px;
+			grid-template-columns: 330px minmax(0, 1fr);
+			gap: 36px;
+			width: min(100%, 1100px);
+			justify-self: center;
+			border: 1px solid var(--line);
+			border-radius: 20px;
+			background:
+				radial-gradient(ellipse at 50% 42%, rgba(229, 229, 226, 0.94), rgba(234, 233, 230, 0.78) 45%, rgba(244, 243, 240, 0.5) 76%),
+				var(--panel);
+			padding: 34px;
 		}
 
-		.aside {
-			padding: 24px;
-			border-right: 1px solid var(--line);
-			background: rgba(247, 249, 247, 0.72);
+		.source-summary {
+			display: grid;
+			align-content: start;
+			gap: 20px;
 		}
 
-		.aside-inner {
-			position: sticky;
-			top: 80px;
-		}
-
-		.section-title {
-			display: flex;
-			align-items: baseline;
-			justify-content: space-between;
-			gap: 12px;
-			margin: 0 0 12px;
-		}
-
-		.section-title h2,
-		.section-title h3 {
-			margin: 0;
-			font-size: 15px;
-			line-height: 1.4;
-			font-weight: 760;
-		}
-
-		.section-title span {
-			font-size: 12px;
-			color: var(--muted);
-			white-space: nowrap;
+		.section-label {
+			margin: 0 0 10px;
+			font-size: 13px;
+			font-weight: 700;
+			color: var(--quiet);
 		}
 
 		.source-grid {
 			display: grid;
-			grid-template-columns: repeat(2, 1fr);
-			gap: 8px;
-			margin-bottom: 16px;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 10px;
 		}
 
 		.thumb {
-			aspect-ratio: 1;
-			border: 1px solid var(--line);
-			border-radius: var(--radius);
 			position: relative;
+			min-height: 96px;
+			border: 1px solid rgba(219, 219, 219, 0.9);
+			border-radius: var(--radius);
 			overflow: hidden;
-			background: var(--surface-blue);
+			background: #ecebe8;
 		}
 
 		.thumb::before,
 		.thumb::after {
 			content: "";
 			position: absolute;
-			border: 1px solid rgba(255, 255, 255, 0.65);
-			background: rgba(255, 255, 255, 0.52);
+			border: 1px solid rgba(255, 255, 255, 0.72);
+			background: rgba(255, 255, 255, 0.55);
 		}
 
 		.thumb::before {
 			inset: 12px 10px auto;
-			height: 28px;
+			height: 24px;
 			border-radius: 7px;
 		}
 
 		.thumb::after {
 			left: 12px;
-			right: 28px;
+			right: 22px;
 			bottom: 12px;
-			height: 38px;
+			height: 34px;
 			border-radius: 7px;
 		}
 
 		.thumb.one {
-			background: linear-gradient(135deg, #e8f2f4, #f6f7f5 54%, #d7e4de);
+			background: linear-gradient(135deg, #e8f2f4, #f4f3f0 54%, #d7e4de);
 		}
 
 		.thumb.two {
@@ -240,8 +259,8 @@
 
 		.meta-list {
 			display: grid;
-			gap: 8px;
-			margin: 0 0 20px;
+			gap: 9px;
+			margin: 0;
 			padding: 0;
 			list-style: none;
 		}
@@ -249,11 +268,11 @@
 		.meta-list li {
 			display: flex;
 			justify-content: space-between;
-			gap: 12px;
-			border-bottom: 1px solid var(--line);
-			padding-bottom: 8px;
-			font-size: 12px;
-			color: var(--muted);
+			gap: 14px;
+			border-bottom: 1px solid rgba(219, 219, 219, 0.9);
+			padding-bottom: 9px;
+			font-size: 13px;
+			color: var(--quiet);
 		}
 
 		.meta-list strong {
@@ -262,189 +281,167 @@
 			text-align: right;
 		}
 
-		.content {
-			padding: 24px;
-		}
-
-		.panel {
-			border: 1px solid var(--line);
-			border-radius: var(--radius);
-			background: var(--surface);
-		}
-
-		.ai-panel {
+		.ai-block {
 			display: grid;
-			grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
-			overflow: hidden;
+			gap: 18px;
+			align-content: start;
 		}
 
-		.summary,
-		.prompt {
-			padding: 18px;
-		}
-
-		.summary {
-			background: linear-gradient(180deg, var(--surface-blue), #ffffff);
-			border-right: 1px solid var(--line);
-		}
-
-		.summary h2,
-		.prompt h2 {
-			margin: 0 0 10px;
-			font-size: 16px;
-			font-weight: 760;
-		}
-
-		.summary p {
+		.ai-block h2 {
 			margin: 0;
-			color: #47524d;
+			font-size: 21px;
+			line-height: 1.35;
+		}
+
+		.summary-text {
+			margin: 0;
+			max-width: 660px;
+			font-size: 16px;
+			line-height: 1.9;
+			color: var(--muted);
+		}
+
+		.prompt-area {
+			display: grid;
+			gap: 12px;
+			border-top: 1px solid rgba(219, 219, 219, 0.9);
+			padding-top: 18px;
 		}
 
 		.prompt-toolbar {
 			display: flex;
-			align-items: center;
 			justify-content: space-between;
-			gap: 10px;
-			margin-bottom: 12px;
+			gap: 12px;
+			flex-wrap: wrap;
 		}
 
 		.segment {
 			display: inline-flex;
+			gap: 2px;
 			border: 1px solid var(--line);
 			border-radius: var(--radius);
-			padding: 2px;
-			background: var(--surface-soft);
+			padding: 3px;
+			background: rgba(244, 243, 240, 0.78);
 		}
 
 		.segment button {
 			border: 0;
-			border-radius: 6px;
+			border-radius: 7px;
 			background: transparent;
-			padding: 5px 8px;
-			font-size: 12px;
+			padding: 7px 12px;
+			color: var(--quiet);
+			font-size: 13px;
 			font-weight: 700;
-			color: var(--muted);
-			cursor: pointer;
 		}
 
 		.segment button.active {
-			background: var(--surface);
+			background: rgba(255, 255, 255, 0.76);
 			color: var(--ink);
-			box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 		}
 
 		.prompt-box {
-			min-height: 118px;
-			border: 1px solid var(--line);
+			min-height: 112px;
+			border: 1px solid rgba(219, 219, 219, 0.9);
 			border-radius: var(--radius);
-			padding: 12px;
-			background: #fbfcfb;
-			color: #38423e;
-			font-size: 13px;
-			overflow: hidden;
+			background: rgba(255, 255, 255, 0.56);
+			padding: 16px;
+			color: var(--muted);
+			font-size: 14px;
+			line-height: 1.8;
 		}
 
 		.prompt-actions {
 			display: flex;
 			justify-content: flex-end;
-			gap: 8px;
-			margin-top: 12px;
-		}
-
-		.section {
-			margin-top: 18px;
-		}
-
-		.chip-list {
-			display: flex;
+			gap: 10px;
 			flex-wrap: wrap;
-			gap: 8px;
 		}
 
-		.chip {
-			display: inline-flex;
-			align-items: center;
-			gap: 6px;
-			border: 1px solid var(--line);
-			border-radius: var(--radius);
-			padding: 8px 10px;
-			background: var(--surface);
+		.output-section {
+			width: min(100%, 1100px);
+			justify-self: center;
+		}
+
+		.section-heading {
+			display: flex;
+			align-items: baseline;
+			justify-content: space-between;
+			gap: 16px;
+			margin-bottom: 16px;
+		}
+
+		.section-heading h2 {
+			margin: 0;
+			font-size: 18px;
+			line-height: 1.35;
+		}
+
+		.section-heading span {
 			font-size: 13px;
-			color: var(--muted);
-		}
-
-		.chip strong {
-			color: var(--ink);
-			font-weight: 760;
+			color: var(--quiet);
 		}
 
 		.directions {
 			display: grid;
 			grid-template-columns: repeat(3, minmax(0, 1fr));
-			gap: 10px;
+			gap: 16px;
 		}
 
 		.direction {
-			position: relative;
-			display: flex;
-			flex-direction: column;
-			min-height: 142px;
-			padding: 14px;
+			display: grid;
+			align-content: start;
+			gap: 12px;
+			min-height: 250px;
 			border: 1px solid var(--line);
 			border-radius: var(--radius);
-			background: var(--surface);
-		}
-
-		.direction.primary {
-			border-color: rgba(51, 95, 86, 0.42);
-			background: linear-gradient(180deg, #f7fbf9, #ffffff);
+			background:
+				radial-gradient(circle at 50% 42%, rgba(229, 229, 226, 0.72), rgba(248, 247, 244, 0.92) 72%),
+				var(--panel-light);
+			padding: 20px;
 		}
 
 		.rank {
 			display: inline-flex;
 			align-items: center;
-			gap: 6px;
-			margin-bottom: 10px;
-			font-size: 12px;
-			font-weight: 760;
-			color: var(--muted);
+			gap: 8px;
+			font-size: 13px;
+			font-weight: 700;
+			color: var(--quiet);
 		}
 
 		.rank b {
-			display: inline-grid;
-			place-items: center;
-			width: 30px;
-			height: 24px;
-			border-radius: 6px;
-			background: var(--accent-soft);
-			color: var(--accent);
+			font-family: var(--font-display);
+			font-size: 20px;
+			font-weight: 400;
+			color: var(--ink);
 		}
 
 		.direction h3 {
-			margin: 0 0 8px;
-			font-size: 18px;
-			line-height: 1.3;
+			margin: 0;
+			font-size: 23px;
+			line-height: 1.25;
 		}
 
 		.direction p {
-			margin: 0 0 12px;
-			font-size: 13px;
+			margin: 0;
+			font-size: 14px;
+			line-height: 1.8;
 			color: var(--muted);
 		}
 
 		.tags {
 			display: flex;
 			flex-wrap: wrap;
-			gap: 6px;
-			margin-bottom: 12px;
+			gap: 7px;
 		}
 
 		.tag {
-			border-radius: 6px;
-			background: var(--surface-soft);
-			padding: 4px 7px;
-			font-size: 11px;
-			color: var(--muted);
+			border: 1px solid rgba(219, 219, 219, 0.84);
+			border-radius: 7px;
+			background: rgba(255, 255, 255, 0.55);
+			padding: 5px 8px;
+			font-size: 12px;
+			color: var(--quiet);
 		}
 
 		.direction-link {
@@ -452,20 +449,18 @@
 			align-items: center;
 			justify-content: center;
 			gap: 4px;
-			align-self: flex-start;
-			margin-top: auto;
-			border: 1px solid var(--line-strong);
-			border-radius: var(--radius);
-			width: 48px;
-			height: 34px;
-			padding: 0;
-			background: #fbfcfb;
-			color: var(--accent);
+			align-self: end;
+			justify-self: start;
+			width: 50px;
+			height: 40px;
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			background: rgba(255, 255, 255, 0.64);
 		}
 
 		.direction-link:hover,
 		.direction-link:focus-visible {
-			border-color: var(--accent);
+			border-color: #a9a9a9;
 			outline: none;
 		}
 
@@ -477,15 +472,74 @@
 
 		.external-mark {
 			font-size: 12px;
-			font-weight: 760;
+			font-weight: 700;
 			line-height: 1;
+			color: var(--muted);
 		}
 
-		.component-group h3 {
-			margin: 0 0 8px;
+		.component-panel {
+			border: 1px solid var(--line);
+			border-radius: var(--radius);
+			padding: 22px;
+			background:
+				radial-gradient(circle at 50% 40%, rgba(229, 229, 226, 0.78), rgba(248, 247, 244, 0.95) 70%),
+				var(--panel-light);
+		}
+
+		.component-panel h3 {
+			margin: 0 0 16px;
+			font-size: 18px;
+			line-height: 1.35;
+		}
+
+		.ingredient-grid {
+			display: grid;
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+			gap: 10px;
+		}
+
+		.ingredient-row {
+			display: grid;
+			gap: 6px;
+			min-height: 90px;
+			border: 1px solid rgba(219, 219, 219, 0.86);
+			border-radius: var(--radius);
+			background: rgba(255, 255, 255, 0.58);
+			padding: 14px;
+		}
+
+		.ingredient-label {
 			font-size: 12px;
-			font-weight: 760;
-			color: var(--muted);
+			font-weight: 700;
+			color: var(--quiet);
+		}
+
+		.ingredient-value {
+			font-size: 15px;
+			line-height: 1.55;
+			color: var(--ink);
+		}
+
+		.footer {
+			display: grid;
+			grid-template-columns: 1fr auto 1fr;
+			align-items: center;
+			min-height: 59px;
+			padding: 0 24px;
+			background: var(--footer);
+			color: #8b8b8b;
+			font-size: 14px;
+		}
+
+		.footer small {
+			justify-self: center;
+			font-size: 14px;
+		}
+
+		.footer-links {
+			display: flex;
+			gap: 22px;
+			justify-self: end;
 		}
 
 		.toast {
@@ -496,8 +550,8 @@
 			opacity: 0;
 			transition: 180ms ease;
 			border-radius: var(--radius);
-			background: var(--ink);
-			color: white;
+			background: var(--dark);
+			color: #fefdfb;
 			padding: 10px 12px;
 			font-size: 13px;
 			z-index: 20;
@@ -509,223 +563,251 @@
 		}
 
 		@media (max-width: 980px) {
-			.header {
+			.result-panel {
 				grid-template-columns: 1fr;
-			}
-
-			.actions {
-				justify-content: flex-start;
-			}
-
-			.layout {
-				grid-template-columns: 1fr;
-			}
-
-			.aside {
-				border-right: 0;
-				border-top: 1px solid var(--line);
-				order: 2;
-			}
-
-			.aside-inner {
-				position: static;
-			}
-
-			.content {
-				order: 1;
-			}
-		}
-
-		@media (max-width: 760px) {
-			.shell {
-				padding: 0;
-			}
-
-			.app {
-				border-left: 0;
-				border-right: 0;
-			}
-
-			.topbar {
-				padding: 0 16px;
-			}
-
-			.header,
-			.content,
-			.aside {
-				padding: 18px;
-			}
-
-			h1 {
-				font-size: 24px;
-			}
-
-			.btn {
-				min-height: 40px;
-			}
-
-			.ai-panel {
-				grid-template-columns: 1fr;
-			}
-
-			.summary {
-				border-right: 0;
-				border-bottom: 1px solid var(--line);
-			}
-
-			.prompt-toolbar {
-				align-items: stretch;
-				flex-direction: column;
-			}
-
-			.segment,
-			.segment button {
-				width: 100%;
 			}
 
 			.directions {
 				grid-template-columns: 1fr;
 			}
 
+			.ingredient-grid {
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+			}
+		}
+
+		@media (max-width: 760px) {
+			.topbar {
+				min-height: 72px;
+				padding: 18px 20px 0;
+			}
+
+			.brand {
+				font-size: 24px;
+			}
+
+			.icon-button {
+				width: 40px;
+				height: 40px;
+			}
+
+			.output {
+				gap: 30px;
+				padding: 18px 20px 42px;
+			}
+
+			h1 {
+				font-size: 36px;
+			}
+
+			.hero p {
+				font-size: 14px;
+			}
+
+			.action-row {
+				align-items: stretch;
+				flex-direction: column;
+			}
+
+			.result-panel {
+				border-radius: 14px;
+				padding: 20px;
+			}
+
 			.source-grid {
-				grid-template-columns: repeat(3, 1fr);
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+			}
+
+			.thumb {
+				min-height: 84px;
+			}
+
+			.prompt-toolbar,
+			.prompt-actions {
+				align-items: stretch;
+				flex-direction: column;
+			}
+
+			.segment,
+			.segment button,
+			.button {
+				width: 100%;
+			}
+
+			.direction {
+				min-height: 230px;
+			}
+
+			.ingredient-grid {
+				grid-template-columns: 1fr;
+			}
+
+			.footer {
+				grid-template-columns: 1fr;
+				gap: 8px;
+				padding: 18px 20px;
+				text-align: center;
+			}
+
+			.footer-links {
+				justify-self: center;
 			}
 		}
 	</style>
 </head>
 <body>
-	<div class="shell">
-		<main class="app">
-			<nav class="topbar" aria-label="Result navigation">
-				<a class="back-link" href="#">← Back</a>
-			</nav>
+	<div class="page">
+		<header class="topbar" aria-label="Result navigation">
+			<a class="brand" href="input-screen.html">StyleScope</a>
+			<div class="top-actions">
+				<a class="icon-button" href="input-screen.html" aria-label="Input画面へ戻る">←</a>
+				<button class="icon-button" type="button" aria-label="保存" data-save>＋</button>
+			</div>
+		</header>
 
-			<header class="header">
-				<div>
-					<p class="kicker">Result</p>
-					<h1>Soft Futurism / Calm SaaS</h1>
-					<p>透明感と近未来感がありつつ、やわらかく落ち着いたUI方向です。</p>
+		<main class="output">
+			<section class="hero" aria-labelledby="resultTitle">
+				<p class="kicker">StyleScope Result</p>
+				<h1 id="resultTitle">Modern Editorial<br />Web Gallery</h1>
+				<p>雑誌のような余白と大きなビジュアルで、作品を上品に見せるWebギャラリー方向です。</p>
+				<div class="action-row" aria-label="Quick actions">
+					<button class="button primary" type="button" data-open-routes>Pinterestで開く</button>
+					<button class="button" type="button" data-save>保存</button>
+					<a class="button" href="input-screen.html">再分析</a>
 				</div>
-				<div class="actions" aria-label="Quick actions">
-					<button class="btn primary" type="button" data-open-routes>Pinterestで開く</button>
-					<button class="btn" type="button" data-save>保存</button>
-					<button class="btn ghost" type="button">再分析</button>
-				</div>
-			</header>
+			</section>
 
-			<div class="layout">
-				<aside class="aside">
-					<div class="aside-inner">
-						<div class="section-title">
-							<h2>Source</h2>
-						</div>
+			<section class="result-panel" aria-labelledby="aiInstructionTitle">
+				<aside class="source-summary" aria-label="Source summary">
+					<div>
+						<p class="section-label">Source</p>
 						<div class="source-grid" aria-label="uploaded image previews">
 							<div class="thumb one" role="img" aria-label="参考画像1のプレビュー"></div>
 							<div class="thumb two" role="img" aria-label="参考画像2のプレビュー"></div>
 							<div class="thumb three" role="img" aria-label="参考画像3のプレビュー"></div>
 						</div>
-						<ul class="meta-list">
-							<li><span>Input</span><strong>3 images</strong></li>
-							<li><span>Mode</span><strong>共通点分析</strong></li>
-							<li><span>Created</span><strong>2026.06.12</strong></li>
-						</ul>
 					</div>
+					<ul class="meta-list">
+						<li><span>Input</span><strong>3 images</strong></li>
+						<li><span>Mode</span><strong>共通点分析</strong></li>
+						<li><span>Created</span><strong>2026.06.12</strong></li>
+					</ul>
 				</aside>
 
-				<section class="content" aria-label="StyleScope result">
-					<section class="panel ai-panel" aria-labelledby="ai-instruction-title">
-						<div class="summary">
-							<h2 id="ai-instruction-title">AI Instruction</h2>
-							<p>
-								複数画像に共通して、淡い色、広い余白、角丸カード、控えめな境界線が見られます。AIには「冷たすぎないテック感」「低彩度」「余白多め」と伝えると方向性がずれにくいです。
-							</p>
-						</div>
-						<div class="prompt">
-							<div class="prompt-toolbar">
-								<div class="segment" aria-label="prompt type">
-									<button class="active" type="button" data-variant="improve">UI改善</button>
-									<button type="button" data-variant="new">新規生成</button>
-								</div>
-								<div class="segment" aria-label="prompt language">
-									<button class="active" type="button" data-lang="ja">日本語</button>
-									<button type="button" data-lang="en">English</button>
-								</div>
+				<section class="ai-block">
+					<div>
+						<p class="section-label">AI Instruction</p>
+						<h2 id="aiInstructionTitle">AIに渡せる方向性</h2>
+						<p class="summary-text">
+							複数画像に共通して、大きなビジュアル、広い余白、セリフ体の見出し、静かな白黒・ニュートラル配色が見られます。AIには「modern editorial web gallery design」「image-led layout」「magazine-like grid」と伝えると方向性がずれにくいです。
+						</p>
+					</div>
+					<div class="prompt-area">
+						<div class="prompt-toolbar">
+							<div class="segment" aria-label="prompt type">
+								<button class="active" type="button" data-variant="improve">UI改善</button>
+								<button type="button" data-variant="new">新規生成</button>
 							</div>
-							<div class="prompt-box" id="promptText">
-								この既存UIを、Soft Futurism と Calm SaaS を掛け合わせた雰囲気に整えてください。淡いブルー、オフホワイト、ソフトグレーを中心に、余白が広く、透明感があり、冷たすぎない近未来感のある画面にしてください。
-							</div>
-							<div class="prompt-actions">
-								<button class="btn ghost" type="button" data-expand>全文を見る</button>
-								<button class="btn primary" type="button" data-copy-prompt>Copy Prompt</button>
+							<div class="segment" aria-label="prompt language">
+								<button class="active" type="button" data-lang="ja">日本語</button>
+								<button type="button" data-lang="en">English</button>
 							</div>
 						</div>
-					</section>
-
-					<section class="section" aria-labelledby="directions-title">
-						<div class="section-title">
-							<h2 id="directions-title">Style Directions</h2>
+						<div class="prompt-box" id="promptText">
+							既存の画面やビジュアルを、modern editorial web gallery design のトーンに整えてください。大きな画像を主役にし、余白を広く取り、上品なセリフ体見出しとシンプルな本文で、雑誌・ギャラリーのように見せてください。
 						</div>
-						<div class="directions">
-							<article class="direction primary">
-								<div class="rank"><b>1st</b>Strong fit</div>
-								<h3>Soft Futurism</h3>
-								<p>透明感と近未来感を、淡い色や丸みでやわらかく見せる方向。</p>
-								<div class="tags"><span class="tag">transparent</span><span class="tag">soft-tech</span></div>
-								<a class="direction-link" href="https://www.pinterest.com/search/pins/?q=soft%20futuristic%20UI" target="_blank" rel="noreferrer" aria-label="Soft FuturismをPinterestで開く" title="Pinterestで開く" data-pinterest-url>
-									<svg class="pinterest-mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-										<circle cx="12" cy="12" r="11" fill="#bd081c" />
-										<path fill="#fff" d="M12.1 5.4c-3.4 0-5.2 2.3-5.2 4.8 0 1.5.8 2.7 2 3.2.2.1.4 0 .5-.3l.2-.8c.1-.2 0-.3-.1-.5-.4-.5-.6-1-.6-1.7 0-1.9 1.4-3.4 3.6-3.4 2 0 3.2 1.2 3.2 3 0 2.2-1 3.8-2.4 3.8-.8 0-1.3-.6-1.1-1.4.2-.9.7-1.9.7-2.6 0-.6-.3-1.1-1-1.1-.8 0-1.4.8-1.4 1.9 0 .7.2 1.1.2 1.1l-.9 3.8c-.2.9-.1 2.1 0 2.9 0 .2.3.2.4.1.5-.7 1.2-1.9 1.5-2.8l.4-1.6c.4.7 1.1 1.3 2.1 1.3 2.8 0 4.9-2.6 4.9-5.8 0-2.9-2.5-5-5.8-5Z" />
-									</svg>
-									<span class="external-mark" aria-hidden="true">↗</span>
-								</a>
-							</article>
-							<article class="direction">
-								<div class="rank"><b>2nd</b>Good fit</div>
-								<h3>Calm SaaS</h3>
-								<p>テック感は残しながら、低彩度と余白で落ち着かせる方向。</p>
-								<div class="tags"><span class="tag">product-ui</span><span class="tag">calm</span></div>
-								<a class="direction-link" href="https://www.pinterest.com/search/pins/?q=calm%20tech%20product%20design" target="_blank" rel="noreferrer" aria-label="Calm SaaSをPinterestで開く" title="Pinterestで開く" data-pinterest-url>
-									<svg class="pinterest-mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-										<circle cx="12" cy="12" r="11" fill="#bd081c" />
-										<path fill="#fff" d="M12.1 5.4c-3.4 0-5.2 2.3-5.2 4.8 0 1.5.8 2.7 2 3.2.2.1.4 0 .5-.3l.2-.8c.1-.2 0-.3-.1-.5-.4-.5-.6-1-.6-1.7 0-1.9 1.4-3.4 3.6-3.4 2 0 3.2 1.2 3.2 3 0 2.2-1 3.8-2.4 3.8-.8 0-1.3-.6-1.1-1.4.2-.9.7-1.9.7-2.6 0-.6-.3-1.1-1-1.1-.8 0-1.4.8-1.4 1.9 0 .7.2 1.1.2 1.1l-.9 3.8c-.2.9-.1 2.1 0 2.9 0 .2.3.2.4.1.5-.7 1.2-1.9 1.5-2.8l.4-1.6c.4.7 1.1 1.3 2.1 1.3 2.8 0 4.9-2.6 4.9-5.8 0-2.9-2.5-5-5.8-5Z" />
-									</svg>
-									<span class="external-mark" aria-hidden="true">↗</span>
-								</a>
-							</article>
-							<article class="direction">
-								<div class="rank"><b>3rd</b>Related</div>
-								<h3>Minimal Editorial</h3>
-								<p>余白とタイポグラフィを中心に、静かで上品に見せる方向。</p>
-								<div class="tags"><span class="tag">editorial</span><span class="tag">quiet</span></div>
-								<a class="direction-link" href="https://www.pinterest.com/search/pins/?q=minimal%20editorial%20UI" target="_blank" rel="noreferrer" aria-label="Minimal EditorialをPinterestで開く" title="Pinterestで開く" data-pinterest-url>
-									<svg class="pinterest-mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-										<circle cx="12" cy="12" r="11" fill="#bd081c" />
-										<path fill="#fff" d="M12.1 5.4c-3.4 0-5.2 2.3-5.2 4.8 0 1.5.8 2.7 2 3.2.2.1.4 0 .5-.3l.2-.8c.1-.2 0-.3-.1-.5-.4-.5-.6-1-.6-1.7 0-1.9 1.4-3.4 3.6-3.4 2 0 3.2 1.2 3.2 3 0 2.2-1 3.8-2.4 3.8-.8 0-1.3-.6-1.1-1.4.2-.9.7-1.9.7-2.6 0-.6-.3-1.1-1-1.1-.8 0-1.4.8-1.4 1.9 0 .7.2 1.1.2 1.1l-.9 3.8c-.2.9-.1 2.1 0 2.9 0 .2.3.2.4.1.5-.7 1.2-1.9 1.5-2.8l.4-1.6c.4.7 1.1 1.3 2.1 1.3 2.8 0 4.9-2.6 4.9-5.8 0-2.9-2.5-5-5.8-5Z" />
-									</svg>
-									<span class="external-mark" aria-hidden="true">↗</span>
-								</a>
-							</article>
+						<div class="prompt-actions">
+							<button class="button" type="button" data-expand>全文を見る</button>
+							<button class="button primary" type="button" data-copy-prompt>AI指示をコピー</button>
 						</div>
-					</section>
-
-					<section class="section" aria-labelledby="components-title">
-						<div class="section-title">
-							<h2 id="components-title">構成要素</h2>
-						</div>
-						<div class="component-group" data-component-mode="image-set">
-							<h3>複数画像の共通点</h3>
-							<div class="chip-list">
-								<span class="chip"><strong>Color</strong>淡い青 / 白 / ソフトグレー</span>
-								<span class="chip"><strong>Layout</strong>余白多め、要素少なめ</span>
-								<span class="chip"><strong>UI Detail</strong>角丸、薄い線、軽い影</span>
-								<span class="chip"><strong>Mood</strong>soft tech / calm / airy</span>
-							</div>
-						</div>
-					</section>
-
+					</div>
 				</section>
-			</div>
+			</section>
+
+			<section class="output-section" aria-labelledby="directionsTitle">
+				<div class="section-heading">
+					<h2 id="directionsTitle">Style Directions</h2>
+				</div>
+				<div class="directions">
+					<article class="direction">
+						<div class="rank"><b>1st</b>Strong fit</div>
+						<h3>Modern Editorial Web Gallery</h3>
+						<p>作品や画像を主役に、大きな余白と編集的な視線で見せる方向。</p>
+						<div class="tags"><span class="tag">editorial</span><span class="tag">gallery</span></div>
+						<a class="direction-link" href="https://www.pinterest.com/search/pins/?q=modern%20editorial%20web%20gallery%20design" target="_blank" rel="noreferrer" aria-label="Modern Editorial Web GalleryをPinterestで開く" title="Pinterestで開く" data-pinterest-url>
+							<svg class="pinterest-mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+								<circle cx="12" cy="12" r="11" fill="#bd081c" />
+								<path fill="#fff" d="M12.1 5.4c-3.4 0-5.2 2.3-5.2 4.8 0 1.5.8 2.7 2 3.2.2.1.4 0 .5-.3l.2-.8c.1-.2 0-.3-.1-.5-.4-.5-.6-1-.6-1.7 0-1.9 1.4-3.4 3.6-3.4 2 0 3.2 1.2 3.2 3 0 2.2-1 3.8-2.4 3.8-.8 0-1.3-.6-1.1-1.4.2-.9.7-1.9.7-2.6 0-.6-.3-1.1-1-1.1-.8 0-1.4.8-1.4 1.9 0 .7.2 1.1.2 1.1l-.9 3.8c-.2.9-.1 2.1 0 2.9 0 .2.3.2.4.1.5-.7 1.2-1.9 1.5-2.8l.4-1.6c.4.7 1.1 1.3 2.1 1.3 2.8 0 4.9-2.6 4.9-5.8 0-2.9-2.5-5-5.8-5Z" />
+							</svg>
+							<span class="external-mark" aria-hidden="true">↗</span>
+						</a>
+					</article>
+					<article class="direction">
+						<div class="rank"><b>2nd</b>Good fit</div>
+						<h3>Art Direction Portfolio</h3>
+						<p>アートディレクションを感じる構図と写真の見せ方で、印象を強める方向。</p>
+						<div class="tags"><span class="tag">portfolio</span><span class="tag">art-direction</span></div>
+						<a class="direction-link" href="https://www.pinterest.com/search/pins/?q=art%20direction%20portfolio%20website%20design" target="_blank" rel="noreferrer" aria-label="Art Direction PortfolioをPinterestで開く" title="Pinterestで開く" data-pinterest-url>
+							<svg class="pinterest-mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+								<circle cx="12" cy="12" r="11" fill="#bd081c" />
+								<path fill="#fff" d="M12.1 5.4c-3.4 0-5.2 2.3-5.2 4.8 0 1.5.8 2.7 2 3.2.2.1.4 0 .5-.3l.2-.8c.1-.2 0-.3-.1-.5-.4-.5-.6-1-.6-1.7 0-1.9 1.4-3.4 3.6-3.4 2 0 3.2 1.2 3.2 3 0 2.2-1 3.8-2.4 3.8-.8 0-1.3-.6-1.1-1.4.2-.9.7-1.9.7-2.6 0-.6-.3-1.1-1-1.1-.8 0-1.4.8-1.4 1.9 0 .7.2 1.1.2 1.1l-.9 3.8c-.2.9-.1 2.1 0 2.9 0 .2.3.2.4.1.5-.7 1.2-1.9 1.5-2.8l.4-1.6c.4.7 1.1 1.3 2.1 1.3 2.8 0 4.9-2.6 4.9-5.8 0-2.9-2.5-5-5.8-5Z" />
+							</svg>
+							<span class="external-mark" aria-hidden="true">↗</span>
+						</a>
+					</article>
+					<article class="direction">
+						<div class="rank"><b>3rd</b>Related</div>
+						<h3>Minimal Web Magazine</h3>
+						<p>雑誌のようなタイポグラフィとグリッドで、情報を静かに整理する方向。</p>
+						<div class="tags"><span class="tag">magazine</span><span class="tag">grid</span></div>
+						<a class="direction-link" href="https://www.pinterest.com/search/pins/?q=minimal%20web%20magazine%20layout" target="_blank" rel="noreferrer" aria-label="Minimal Web MagazineをPinterestで開く" title="Pinterestで開く" data-pinterest-url>
+							<svg class="pinterest-mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+								<circle cx="12" cy="12" r="11" fill="#bd081c" />
+								<path fill="#fff" d="M12.1 5.4c-3.4 0-5.2 2.3-5.2 4.8 0 1.5.8 2.7 2 3.2.2.1.4 0 .5-.3l.2-.8c.1-.2 0-.3-.1-.5-.4-.5-.6-1-.6-1.7 0-1.9 1.4-3.4 3.6-3.4 2 0 3.2 1.2 3.2 3 0 2.2-1 3.8-2.4 3.8-.8 0-1.3-.6-1.1-1.4.2-.9.7-1.9.7-2.6 0-.6-.3-1.1-1-1.1-.8 0-1.4.8-1.4 1.9 0 .7.2 1.1.2 1.1l-.9 3.8c-.2.9-.1 2.1 0 2.9 0 .2.3.2.4.1.5-.7 1.2-1.9 1.5-2.8l.4-1.6c.4.7 1.1 1.3 2.1 1.3 2.8 0 4.9-2.6 4.9-5.8 0-2.9-2.5-5-5.8-5Z" />
+							</svg>
+							<span class="external-mark" aria-hidden="true">↗</span>
+						</a>
+					</article>
+				</div>
+			</section>
+
+			<section class="output-section" aria-labelledby="componentsTitle">
+				<div class="section-heading">
+					<h2 id="componentsTitle">構成要素</h2>
+					<span>Common points</span>
+				</div>
+				<div class="component-panel" data-component-mode="image-set">
+					<h3>複数画像の共通点</h3>
+					<div class="ingredient-grid">
+						<div class="ingredient-row">
+							<span class="ingredient-label">Color</span>
+							<strong class="ingredient-value">オフホワイト / ブラック / ニュートラルグレー</strong>
+						</div>
+						<div class="ingredient-row">
+							<span class="ingredient-label">Layout</span>
+							<strong class="ingredient-value">大きな画像、余白広め、非対称グリッド</strong>
+						</div>
+						<div class="ingredient-row">
+							<span class="ingredient-label">Typography</span>
+							<strong class="ingredient-value">上品なセリフ体見出し、読みやすい本文</strong>
+						</div>
+						<div class="ingredient-row">
+							<span class="ingredient-label">Mood</span>
+							<strong class="ingredient-value">editorial / curated / refined</strong>
+						</div>
+					</div>
+				</div>
+			</section>
 		</main>
+
+		<footer class="footer">
+			<span aria-hidden="true"></span>
+			<small>© 2026 TSUQREA Inc.</small>
+			<div class="footer-links">
+				<a href="#">PrivacyPolicy</a>
+				<a href="#">Contact</a>
+			</div>
+		</footer>
 	</div>
 
 	<div class="toast" role="status" aria-live="polite" id="toast">コピーしました</div>
@@ -735,12 +817,12 @@
 		const toast = document.getElementById("toast");
 		const prompts = {
 			improve: {
-				ja: "この既存UIを、Soft Futurism と Calm SaaS を掛け合わせた雰囲気に整えてください。淡いブルー、オフホワイト、ソフトグレーを中心に、余白が広く、透明感があり、冷たすぎない近未来感のある画面にしてください。角丸カード、控えめな境界線、薄い影、クリーンなサンセリフを使ってください。",
-				en: "Redesign this existing UI with a Soft Futurism and Calm SaaS direction. Use pale blue, off-white, and soft gray, with generous spacing, subtle borders, rounded cards, and a gentle futuristic mood that does not feel cold.",
+				ja: "既存の画面やビジュアルを、modern editorial web gallery design のトーンに整えてください。大きな画像を主役にし、オフホワイト、黒、ニュートラルグレーを基調に、余白を広く取ってください。見出しは上品なセリフ体、本文は読みやすいサンセリフで、雑誌のようなグリッドと静かな階層を作ってください。過度な装飾、SaaSっぽい青いカードUI、派手なグラデーションは避けてください。",
+				en: "Refine this existing screen or visual direction with a modern editorial web gallery design tone. Lead with large imagery, generous whitespace, elegant serif headlines, clean body typography, and a restrained neutral palette. Use a magazine-like grid and curated spacing. Avoid over-decorated UI, SaaS-like blue cards, loud gradients, and dense layouts.",
 			},
 			new: {
-				ja: "Soft Futurism と Calm SaaS を掛け合わせた雰囲気のデジタルプロダクトUIを作成してください。淡いブルー、オフホワイト、ソフトグレーを中心に、余白が広く、透明感があり、やわらかい近未来感のある画面にしてください。",
-				en: "Create a new digital product UI with a Soft Futurism and Calm SaaS direction. Keep it spacious, calm, translucent, and gently futuristic, with rounded cards, subtle borders, and restrained gradients.",
+				ja: "modern editorial web gallery design のトーンで新しいデザインを作成してください。大きな画像、広い余白、上品なセリフ体見出し、雑誌のようなグリッド、オフホワイト・黒・ニュートラルグレーの落ち着いた配色を使ってください。作品やビジュアルが主役に見えるよう、装飾は最小限にしてください。",
+				en: "Create a new design with a modern editorial web gallery design tone. Make imagery the hero, use generous whitespace, elegant serif headlines, clean supporting text, a magazine-like grid, and an off-white, black, and neutral gray palette. Keep decoration minimal so the content feels curated and refined.",
 			},
 		};
 		let currentVariant = "improve";
@@ -802,7 +884,10 @@
 			});
 		});
 
-		document.querySelector("[data-save]").addEventListener("click", () => showToast("保存しました"));
+		document.querySelectorAll("[data-save]").forEach((button) => {
+			button.addEventListener("click", () => showToast("保存しました"));
+		});
+
 		document.querySelector("[data-expand]").addEventListener("click", () => {
 			promptText.style.maxHeight = "none";
 			promptText.style.minHeight = "auto";
