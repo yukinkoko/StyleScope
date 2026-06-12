@@ -16,7 +16,7 @@ concept_long: >
 core_value:
   - 好きなビジュアルや曖昧なムードを言語化できる
   - 複数の参考画像に共通する雰囲気を抽出できる
-  - PinterestやGoogle画像検索で使える検索ワードを生成できる
+  - Pinterestで使える検索ワードを生成できる
   - 検索ワードから外部検索をすぐ開ける
   - AIコーディングツールやUI生成AIに渡せるデザイン指示文を作れる
   - 将来的にムードボード作成へ拡張できる
@@ -94,7 +94,7 @@ positioning:
     difference:
       - "毎回同じ構造で分析結果を出す"
       - "検索ワードが整理される"
-      - "Pinterest / Google画像検索にすぐ飛べる"
+      - "Pinterest検索にすぐ飛べる"
       - "複数検索ワードをまとめて開ける"
       - "分析結果を保存できる"
       - "AIに渡すデザイン指示文を生成できる"
@@ -119,9 +119,8 @@ core_experience:
   output_types:
     - "AI Analysis / AI分析"
     - "Style Directions / スタイル候補"
-    - "Common Points / 共通点"
-    - "構成要素 / ビジュアル構成要素"
-    - "Search Routes / 検索ルート"
+    - "構成要素 / 入力タイプに応じて、共通点またはスタイル構成を表示する"
+    - "Pinterest探索リンク / Style Directionsカード内の検索導線"
     - "Prompt for AI / AIに渡すデザイン指示"
     - "Related Styles / 関連スタイル"
     - "保存用データ"
@@ -134,9 +133,9 @@ core_experience:
     - step: 3
       action: "構成要素で色・タイポ・余白・UIディテールなどを理解する"
     - step: 4
-      action: "Search RoutesからPinterestやGoogle画像検索を開く"
+      action: "Style DirectionsカードからPinterest検索を開く"
     - step: 5
-      action: "必要に応じて複数のPinterest検索結果をまとめて開く"
+      action: "必要に応じて上部ボタンから3候補のPinterest検索結果をまとめて開く"
     - step: 6
       action: "AIに渡すデザイン指示文をコピーする"
     - step: 7
@@ -165,10 +164,10 @@ ai_analysis:
       description: "曖昧なムード表現を、近いスタイル候補と検索ワードに変換する"
   outputs:
     - "AI Summary / 分析サマリー"
-    - "Common Points / 共通点"
+    - "複数画像の共通点（image_set時）"
     - "Style Directions / スタイル候補"
-    - "構成要素"
-    - "Search Routes / 検索ルート"
+    - "このスタイルの構成要素（single_image / mood_text時）"
+    - "Pinterest探索リンク / Style Directionsカード内の検索導線"
     - "Prompt for AI / AIに渡すデザイン指示"
   limits:
     - "スタイル名を唯一の正解として断定しない"
@@ -195,9 +194,8 @@ v1_must:
     outputs:
       - "AI Summary"
       - "Style Directions"
-      - "Common Points"
-      - "構成要素"
-      - "Search Routes"
+      - "構成要素（入力タイプに応じて表示名を変更）"
+      - "Pinterest探索リンク"
       - "Prompt for AI"
 
   - feature: "画像から探す"
@@ -208,8 +206,8 @@ v1_must:
       - "補足テキスト 任意"
     outputs:
       - "Style Directions"
-      - "構成要素"
-      - "Search Routes"
+      - "このスタイルの構成要素"
+      - "Pinterest探索リンク"
       - "Prompt for AI"
 
   - feature: "複数画像から共通点を探す"
@@ -219,10 +217,9 @@ v1_must:
       - "補足テキスト 任意"
     outputs:
       - "AI Summary"
-      - "Common Points"
       - "Style Directions"
-      - "構成要素"
-      - "Search Routes"
+      - "複数画像の共通点"
+      - "Pinterest探索リンク"
       - "Prompt for AI"
     fields:
       - "共通する色・明度・彩度"
@@ -239,20 +236,25 @@ v1_must:
       - "Mood hints チップ"
     outputs:
       - "Style Directions"
-      - "構成要素"
-      - "Search Routes"
+      - "このスタイルの構成要素"
+      - "Pinterest探索リンク"
       - "Prompt for AI"
 
   - feature: "Style Directions"
-    description: "近いスタイル候補を3件程度表示する"
+    description: "近いスタイル候補を3件程度表示し、各候補からPinterest検索へ進める"
     fields:
       - "スタイル名"
       - "Fit感: Strong fit / Good fit / Nearby / Related"
       - "短い説明"
       - "ムードタグ"
+      - "Pinterest検索リンク"
 
   - feature: "構成要素"
-    description: "その雰囲気を構成する視覚要素を分解する"
+    description: "入力タイプに応じて、共通点またはスタイル構成を分解する"
+    display_name_rules:
+      image_set: "複数画像の共通点"
+      single_image: "このスタイルの構成要素"
+      mood_text: "このスタイルの構成要素"
     fields:
       - "Color"
       - "Typography"
@@ -262,14 +264,11 @@ v1_must:
       - "Mood"
       - "Avoid"
 
-  - feature: "Search Routes"
-    description: "検索ワードと外部検索リンクを表示する"
+  - feature: "Pinterest探索リンク"
+    description: "検索ワードを独立リストにせず、Style Directionsカード内の外部検索リンクとして表示する"
     actions:
       - "Pinterestで1件開く"
-      - "Google画像検索で1件開く"
-      - "検索ワードをコピー"
-      - "Pinterestで選択中の3件をまとめて開く"
-      - "Google画像で選択中の3件をまとめて開く"
+      - "上部ボタンから表示中の3件をまとめて開く"
 
   - feature: "Prompt for AI"
     description: "AIコーディングツールやUI生成AIに渡せるデザイン指示文を生成する"
@@ -289,10 +288,10 @@ v1_must:
       - "元画像 / 複数画像 / 入力文"
       - "補足テキスト"
       - "AI Summary"
-      - "Common Points"
+      - "複数画像の共通点"
       - "Style Directions"
-      - "構成要素"
-      - "Search Routes"
+      - "このスタイルの構成要素"
+      - "Pinterest探索リンク"
       - "Prompt for AI"
       - "作成日時"
       - "Favorite"
@@ -411,20 +410,16 @@ screens_v1:
     main_elements:
       - "Source Summary"
       - "Quick Actions"
-      - "AI Summary"
-      - "Common Points"
+      - "AI Instruction"
       - "Style Directions"
-      - "構成要素"
-      - "Search Routes"
-      - "Prompt for AI"
-      - "Related Styles"
+      - "構成要素（入力タイプに応じて表示名を変更）"
       - "Save / Re-analyze"
 
   - id: library
     name: "Library"
     purpose: "保存した探索結果を見る"
     main_elements:
-      - "All / Image / Image Set / Mood Text / Favorites フィルター"
+      - "All / 画像 / 複数画像 / テキスト / Favorites フィルター"
       - "保存カード一覧"
       - "検索"
 
@@ -433,7 +428,7 @@ screens_v1:
     purpose: "保存した結果を再利用する"
     main_elements:
       - "Result内容の再表示"
-      - "Pinterest routesを再度開く"
+      - "Style DirectionsのPinterestリンクを再度開く"
       - "Promptをコピー"
       - "Favorite"
       - "Delete"
@@ -583,7 +578,7 @@ result_screen:
   purpose: "読む画面ではなく、探索・コピー・保存へ進む操作パネル"
   layout:
     desktop: "上部に結果サマリー、左にSource/Actions、右に分析結果"
-    mobile: "Sourceを上部、Quick Actionsを固定、各セクションは縦積み"
+    mobile: "AI Instructionを上部、Sourceは下部、各セクションは縦積み"
   sections:
     - id: header
       name: "Result Header"
@@ -592,44 +587,40 @@ result_screen:
         - "短い説明"
         - "Quick Actions"
       quick_actions:
-        - "Pinterestで3件開く"
-        - "AI指示をコピー"
+        - "Pinterestで開く"
         - "保存"
+        - "再分析"
 
     - id: source_summary
       name: "Source Summary"
       content:
         - "画像サムネイル / 複数画像サムネイル / 入力文"
         - "補足テキスト"
-        - "入力タイプ"
+        - "入力タイプ（内部データ。画面上では強調しない）"
 
-    - id: ai_summary
-      name: "AI Summary"
+    - id: ai_instruction
+      name: "AI Instruction"
       content:
-        - "AIが読み取った全体の方向性"
-        - "分析の前提"
-        - "確信度ではなく、近い方向性としての説明"
-
-    - id: common_points
-      name: "Common Points"
-      content:
-        - "複数画像に共通するムード"
-        - "共通する色・余白・構図"
-        - "共通するUIディテール"
-        - "共通しない要素 / ノイズ"
-        - "共通点から作った検索ワード"
+        - "左側: AI Summary / AIが読み取った全体の方向性"
+        - "右側: Prompt for AI / AIに貼る指示文"
+        - "UI改善 / 新規生成 の切り替え"
+        - "日本語 / 英語 の切り替え"
+        - "Copy Promptボタン"
 
     - id: style_directions
       name: "Style Directions"
       content:
-        - "スタイル候補3件"
+        - "スタイル候補3件: 1st / 2nd / 3rd"
         - "Fit感"
         - "説明"
         - "タグ"
+        - "各カード内のPinterestアイコンリンク"
 
     - id: visual_components
       name: "構成要素"
       content:
+        - "image_set時の表示名: 複数画像の共通点"
+        - "single_image / mood_text時の表示名: このスタイルの構成要素"
         - "Color"
         - "Typography"
         - "Layout"
@@ -638,38 +629,11 @@ result_screen:
         - "Mood"
         - "Avoid"
 
-    - id: search_routes
-      name: "Search Routes"
-      content:
-        - "検索ワード"
-        - "検索ワードの説明"
-        - "Pinterestボタン"
-        - "Google Imagesボタン"
-        - "Copyボタン"
-        - "まとめて開くボタン"
-
-    - id: prompt_for_ai
-      name: "Prompt for AI"
-      content:
-        - "UI改善用プロンプト"
-        - "新規生成用プロンプト"
-        - "日本語/英語切り替え"
-        - "Copy Promptボタン"
-
-    - id: related_styles
-      name: "Related Styles"
-      content:
-        - "関連スタイル名"
-        - "説明"
-        - "Exploreボタン"
-
     - id: save_reanalyze
       name: "Save / Re-analyze"
       content:
         - "Save to Library"
-        - "Favorite"
         - "Re-analyze"
-        - "Copy all"
 ```
 
 ---
@@ -678,68 +642,50 @@ result_screen:
 
 ```text
 ┌────────────────────────────────────────────────────────┐
-│ ← Back                                       StyleScope │
+│ ← Back                                                  │
 ├────────────────────────────────────────────────────────┤
 │                                                        │
 │  Result                                                │
 │  Soft Futurism / Calm SaaS / Minimal Editorial          │
 │  透明感と近未来感がありつつ、やわらかく落ち着いた方向です。│
 │                                                        │
-│  [ Pinterestで3件開く ] [ AI指示をコピー ] [ 保存 ]      │
+│  [ Pinterestで開く ] [ 保存 ] [ 再分析 ]                  │
 │                                                        │
 ├───────────────────────┬────────────────────────────────┤
-│ Source                │ AI Summary                      │
+│ Source                │ AI Instruction                  │
 │ ┌───────────────────┐ │                                │
-│ │ image/text preview│ │ ┌────────────────────────────┐ │
-│ └───────────────────┘ │ │ 透明感と近未来感が共通し、  │ │
-│                       │ │ やわらかいSaaS寄りの方向。 │ │
-│ Quick Actions         │ │ 余白が広く、低彩度で静か。 │ │
-│ [ Save ]              │ │ AIには「冷たすぎない」と伝える。│ │
-│ [ Re-analyze ]        │ └────────────────────────────┘ │
-│ [ Copy all ]          │                                │
-│                       │ Common Points                  │
+│ │ image/text preview│ │ ┌────────────┬───────────────┐ │
+│ └───────────────────┘ │ │ Summary    │ Prompt for AI │ │
+│                       │ │ 透明感と    │ [UI改善][新規] │ │
+│                       │ │ 近未来感。  │ この既存UIを… │ │
+│                       │ │ 余白多め。  │ [Copy Prompt] │ │
+│                       │ └────────────────────────────┘ │
+│                       │                                │
+│                       │ Style Directions                │
+│                       │ ┌────────────────────────────┐ │
+│                       │ │ 1st / Strong fit            │ │
+│                       │ │ Soft Futurism               │ │
+│                       │ │ [ P icon ↗ ]                │ │
+│                       │ └────────────────────────────┘ │
+│                       │                                │
+│                       │ ┌────────────────────────────┐ │
+│                       │ │ 2nd / Good fit              │ │
+│                       │ │ Calm SaaS                   │ │
+│                       │ │ [ P icon ↗ ]                │ │
+│                       │ └────────────────────────────┘ │
+│                       │ ┌────────────────────────────┐ │
+│                       │ │ 3rd / Related               │ │
+│                       │ │ Minimal Editorial           │ │
+│                       │ │ [ P icon ↗ ]                │ │
+│                       │ └────────────────────────────┘ │
+│                       │                                │
+│                       │ 構成要素                       │
+│                       │ 複数画像の共通点                │
 │                       │ ┌────────────────────────────┐ │
 │                       │ │ ・淡いブルーと白い余白       │ │
 │                       │ │ ・角丸カードと薄い境界線     │ │
 │                       │ │ ・冷たすぎないテック感       │ │
 │                       │ └────────────────────────────┘ │
-│                       │                                │
-│                       │ Style Directions                │
-│                       │ ┌────────────────────────────┐ │
-│                       │ │ Soft Futurism               │ │
-│                       │ │ Strong fit                  │ │
-│                       │ └────────────────────────────┘ │
-│                       │                                │
-│                       │ ┌────────────────────────────┐ │
-│                       │ │ Calm SaaS                   │ │
-│                       │ │ Good fit                    │ │
-│                       │ └────────────────────────────┘ │
-│                       │                                │
-│                       │ 構成要素                       │
-│                       │ ┌──────────┐ ┌──────────────┐ │
-│                       │ │ Color    │ │ Typography   │ │
-│                       │ └──────────┘ └──────────────┘ │
-│                       │ ┌──────────┐ ┌──────────────┐ │
-│                       │ │ Layout   │ │ UI Details   │ │
-│                       │ └──────────┘ └──────────────┘ │
-│                       │                                │
-│                       │ Search Routes                  │
-│                       │ ☑ soft futuristic UI            │
-│                       │   [Pinterest] [Google] [Copy]   │
-│                       │ ☑ calm tech web design          │
-│                       │   [Pinterest] [Google] [Copy]   │
-│                       │ ☑ translucent minimal website   │
-│                       │   [Pinterest] [Google] [Copy]   │
-│                       │                                │
-│                       │ [ Pinterestで選択中の3件を開く ]│
-│                       │                                │
-│                       │ Prompt for AI                   │
-│                       │ [ UI改善 ] [ 新規生成 ]          │
-│                       │ [ Japanese ] [ English ]        │
-│                       │ ┌────────────────────────────┐ │
-│                       │ │ この既存UIを、Soft Futurism… │ │
-│                       │ └────────────────────────────┘ │
-│                       │ [ Copy Prompt ]                │
 │                       │                                │
 └───────────────────────┴────────────────────────────────┘
 ```
@@ -811,28 +757,24 @@ Avoid strong neon colors, dark cyberpunk aesthetics, harsh contrast, dense layou
 
 ---
 
-## 12. Search Routes 仕様
+## 12. Pinterest探索リンク仕様
 
 ```yaml
-search_routes:
-  purpose: "検索ワードを単なる文字列ではなく、探索に進むためのルートとして提示する"
+pinterest_links:
+  purpose: "Style Directionsの候補から、その方向に近いPinterest検索へ進める"
+  placement: "Style Directionsカード内"
   route_item:
     fields:
       - "keyword"
-      - "description"
-      - "selected"
-      - "platform_actions"
+      - "pinterest_url"
     actions:
-      - "Open Pinterest"
-      - "Open Google Images"
-      - "Copy keyword"
-  bulk_actions:
-    - "Pinterestで選択中の3件を開く"
-    - "Google画像で選択中の3件を開く"
+      - "Pinterestアイコンから開く"
+  top_action:
+    - "表示中の3候補をまとめてPinterestで開く"
   behavior:
-    default_selected_count: 3
-    max_selected_count: 3
-    note: "複数タブを開くため、初回だけ軽い説明を出す"
+    default_link_count: 3
+    max_link_count: 3
+    note: "独立したSearch Routesセクションは表示しない"
 ```
 
 ### 外部検索URL
@@ -840,7 +782,6 @@ search_routes:
 ```yaml
 external_search_urls:
   pinterest: "https://www.pinterest.com/search/pins/?q={encoded_keyword}"
-  google_images: "https://www.google.com/search?tbm=isch&q={encoded_keyword}"
 ```
 
 ---
@@ -879,19 +820,25 @@ external_search_urls:
       "name": "Soft Futurism",
       "fit": "strong",
       "description": "透明感と近未来感がありつつ、淡い色や丸みで冷たさを抑える方向。",
-      "tags": ["transparent", "soft-tech", "pale-blue", "airy"]
+      "tags": ["transparent", "soft-tech", "pale-blue", "airy"],
+      "pinterest_keyword": "soft futuristic UI",
+      "pinterest_url": "https://www.pinterest.com/search/pins/?q=soft%20futuristic%20UI"
     },
     {
       "name": "Calm SaaS",
       "fit": "good",
       "description": "テック感はあるが、余白と低彩度で落ち着いた印象にする方向。",
-      "tags": ["minimal", "product-ui", "calm"]
+      "tags": ["minimal", "product-ui", "calm"],
+      "pinterest_keyword": "calm tech product design",
+      "pinterest_url": "https://www.pinterest.com/search/pins/?q=calm%20tech%20product%20design"
     },
     {
       "name": "Minimal Editorial",
       "fit": "related",
       "description": "余白とタイポグラフィを中心に、静かで上品に見せる方向。",
-      "tags": ["editorial", "quiet", "typography"]
+      "tags": ["editorial", "quiet", "typography"],
+      "pinterest_keyword": "minimal editorial UI",
+      "pinterest_url": "https://www.pinterest.com/search/pins/?q=minimal%20editorial%20UI"
     }
   ],
   "visual_components": {
@@ -906,46 +853,14 @@ external_search_urls:
     "mood": ["calm", "airy", "modern", "gentle futuristic"],
     "avoid": ["hard neon", "black cyberpunk", "heavy contrast", "busy layout"]
   },
-  "search_routes": [
-    {
-      "keyword": "soft futuristic UI",
-      "description": "透明感のある近未来UIを探す",
-      "platforms": ["pinterest", "google_images"],
-      "selected_by_default": true
-    },
-    {
-      "keyword": "calm tech web design",
-      "description": "落ち着いたテック系Webデザインを探す",
-      "platforms": ["pinterest", "google_images"],
-      "selected_by_default": true
-    },
-    {
-      "keyword": "translucent minimal website",
-      "description": "半透明・余白・ミニマル系のサイトを探す",
-      "platforms": ["pinterest", "google_images"],
-      "selected_by_default": true
-    },
-    {
-      "keyword": "pale blue SaaS design",
-      "description": "淡いブルー系SaaSデザインを探す",
-      "platforms": ["pinterest", "google_images"],
-      "selected_by_default": false
-    },
-    {
-      "keyword": "glassmorphism app UI",
-      "description": "ガラス質感のアプリUIを探す",
-      "platforms": ["pinterest", "google_images"],
-      "selected_by_default": false
-    }
-  ],
   "prompts": {
     "ja": {
       "ui_improvement": "この既存UIを、Soft Futurism と Calm SaaS を掛け合わせた雰囲気に整えてください。全体は淡いブルー、オフホワイト、ソフトグレーを中心にした低彩度の配色にし、余白を広めに取って、軽く透明感のある印象にしてください。タイポグラフィは読みやすいサンセリフを使い、見出しは中太、本文は落ち着いた印象にしてください。UIは角丸のカード、控えめな境界線、薄い影、やわらかいグラデーションを使い、近未来感は出しつつも冷たくなりすぎないようにしてください。避けたい要素は、強いネオン、黒背景のサイバーパンク、コントラストが強すぎる配色、情報が詰まったレイアウトです。",
-      "new_generation": "Soft Futurism と Calm SaaS を掛け合わせた雰囲気のWebアプリUIを作成してください。淡いブルー、オフホワイト、ソフトグレーを中心に、余白が広く、透明感があり、やわらかい近未来感のある画面にしてください。角丸カード、控えめな境界線、薄い影、クリーンなサンセリフを使い、冷たすぎず親しみやすい印象にしてください。"
+      "new_generation": "Soft Futurism と Calm SaaS を掛け合わせた雰囲気のデジタルプロダクトUIを作成してください。淡いブルー、オフホワイト、ソフトグレーを中心に、余白が広く、透明感があり、やわらかい近未来感のある画面にしてください。角丸カード、控えめな境界線、薄い影、クリーンなサンセリフを使い、冷たすぎず親しみやすい印象にしてください。"
     },
     "en": {
       "ui_improvement": "Redesign this existing UI with a Soft Futurism and Calm SaaS visual direction. Use a low-saturation palette based on pale blue, off-white, and soft gray. Keep the layout spacious, airy, and calm, with a light sense of translucency. Use clean sans-serif typography with medium-weight headings and readable body text. For UI details, use rounded cards, subtle borders, soft shadows, light gradients, and translucent panels. Avoid strong neon colors, dark cyberpunk aesthetics, harsh contrast, dense layouts, and overly decorative elements.",
-      "new_generation": "Create a new web app UI with a Soft Futurism and Calm SaaS visual direction. Use pale blue, off-white, and soft gray as the main palette. Make the layout spacious, calm, translucent, and gently futuristic. Use rounded cards, subtle borders, soft shadows, clean sans-serif typography, and restrained gradients. Keep the overall mood modern, approachable, and not overly cold or technical."
+      "new_generation": "Create a new digital product UI with a Soft Futurism and Calm SaaS visual direction. Use pale blue, off-white, and soft gray as the main palette. Make the layout spacious, calm, translucent, and gently futuristic. Use rounded cards, subtle borders, soft shadows, clean sans-serif typography, and restrained gradients. Keep the overall mood modern, approachable, and not overly cold or technical."
     }
   },
   "related_styles": [
