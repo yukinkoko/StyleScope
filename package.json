@@ -26,7 +26,7 @@
 		"@biomejs/biome": "^2.5.13",
 		"@opennextjs/cloudflare": "^1.20.6",
 		"@tailwindcss/postcss": "^4.3.3",
-		"@types/node": "^25.9.3",
+		"@types/node": "^26.6.1",
 		"@types/react": "^19.2.18",
 		"@types/react-dom": "^19.3.0",
 		"postcss": "^8.5.28",
